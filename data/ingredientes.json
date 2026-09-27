@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "descripcion": "Catálogo de ingredientes con alias regionales y básicos de despensa para RecetaExpress.",
+    "version": "1.0"
+  },
+  "basicos_despensa": [
+    "sal",
+    "pimienta",
+    "aceite",
+    "agua",
+    "azucar"
+  ],
+  "catalogo": [
+    {
+      "canonical": "pollo",
+      "alias": ["pollo", "pechuga de pollo", "muslo de pollo"]
+    },
+    {
+      "canonical": "arroz",
+      "alias": ["arroz", "arroz blanco"]
+    },
+    {
+      "canonical": "cebolla",
+      "alias": ["cebolla", "cebolla morada", "cebolla blanca"]
+    },
+    {
+      "canonical": "tomate",
+      "alias": ["tomate", "jitomate", "tomate perita"]
+    },
+    {
+      "canonical": "huevo",
+      "alias": ["huevo", "huevos"]
+    },
+    {
+      "canonical": "papa",
+      "alias": ["papa", "patata", "papas"]
+    },
+    {
+      "canonical": "queso",
+      "alias": ["queso", "queso rallado", "mozzarella", "queso crema"]
+    },
+    {
+      "canonical": "zanahoria",
+      "alias": ["zanahoria", "zanahorias"]
+    },
+    {
+      "canonical": "ajo",
+      "alias": ["ajo", "dientes de ajo"]
+    },
+    {
+      "canonical": "morrón",
+      "alias": ["morrón", "pimiento", "pimiento rojo", "pimiento verde"]
+    },
+    {
+      "canonical": "espinaca",
+      "alias": ["espinaca", "espinacas"]
+    },
+    {
+      "canonical": "leche",
+      "alias": ["leche"]
+    },
+    {
+      "canonical": "harina",
+      "alias": ["harina", "harina de trigo"]
+    },
+    {
+      "canonical": "pan",
+      "alias": ["pan", "pan rallado"]
+    },
+    {
+      "canonical": "limón",
+      "alias": ["limón", "lima"]
+    }
+  ],
+  "escenarios": {
+    "pocos": ["pollo", "arroz", "cebolla"],
+    "intermedio": ["pollo", "arroz", "cebolla", "tomate", "huevo", "papa", "queso"],
+    "progresivo": {
+      "paso_1": ["pollo", "arroz", "cebolla"],
+      "paso_2": ["pollo", "arroz", "cebolla", "huevo"],
+      "paso_3": ["pollo", "arroz", "cebolla", "huevo", "tomate"]
+    }
+  }
+}

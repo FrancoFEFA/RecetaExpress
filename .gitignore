@@ -1,0 +1,33 @@
+# Entorno y credenciales
+.env
+.venv
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Caché de respuestas: SÍ se commitean las respuestas de ejemplo (no contienen secretos),
+# pero se ignoran archivos temporales de depuración.
+*.tmp
+*.log
