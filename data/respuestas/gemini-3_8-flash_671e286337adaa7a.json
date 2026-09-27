@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of classic skillet chicken and rice, beautifully presented inside a rustic cast-iron skillet resting on a warm, weathered wooden table. Golden-brown, tender seared chicken pieces with crispy glistening skin nestled over fluffy, perfectly cooked seasoned rice, garnished with translucent caramelized onions and freshly cracked coarse black pepper. Soft, diffused natural morning window light from the side, creating gentle shadows and appetizing highlights on the chicken and rice grains. Captured at an appealing 45-degree angle with a shallow depth of field. Cozy, rustic homemade kitchen ambiance, styled with an earth-toned linen cloth in the blurred background. Food styling magazine quality, sharp textures, rich warm palette, no people, no text, no logos.\",\n  \"prompt_es\": \"Fotografía gastronómica profesional de un arroz con pollo clásico en sartén, presentado elegantemente en una sartén rústica de hierro fundido sobre una mesa de madera cálida y envejecida. Piezas de pollo doradas, tiernas y selladas con piel crujiente y brillante, dispuestas sobre arroz sazonado y esponjoso, con cebolla caramelizada translúcida visible y pimienta negra recién molida. Iluminación natural suave y difusa proveniente de una ventana lateral, creando sombras delicadas y brillos apetitosos en el pollo y los granos de arroz. Toma en ángulo de 45 grados con profundidad de campo reducida. Ambiente cálido y acogedor de cocina casera, ambientado con un paño de lino en tonos tierra en el fondo desenfocado. Calidad de revista culinaria, texturas nítidas, paleta de colores cálida y rica, sin personas, sin texto, sin logotipos.\"\n}",
+  "metadata": {
+    "model": "gemini-3.8-flash",
+    "temperature": 0.3,
+    "latency_seconds": 6.332,
+    "prompt_chars": 839,
+    "provider": "gemini"
+  }
+}

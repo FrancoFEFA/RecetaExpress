@@ -13,6 +13,7 @@ jupyter>=1.1.0
 nbconvert>=7.16.0
 ipykernel>=6.29.0
 nbformat>=5.10.0
+nest_asyncio2>=1.7.0
 
 # Análisis y visualización
 pandas>=2.2.0

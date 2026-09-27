@@ -168,9 +168,9 @@ Ejecutamos el prompt básico contra el modelo de texto. Si no hay API key config
 cells.append(code(r"""# 11. Resultado inicial
 from recetaexpress.llm import generate_text
 
-# Determinar proveedor según disponibilidad de API key válida (las keys de Google AI Studio empiezan con AIza)
+# Determinar proveedor según disponibilidad de API key real (no placeholder)
 key = os.getenv("GEMINI_API_KEY", "").strip()
-provider = "gemini" if key.startswith("AIza") else "pollinations"
+provider = "gemini" if key and "TU_API_KEY" not in key else "pollinations"
 print(f"Proveedor activo: {provider}")
 
 resultado_basico = generate_text(prompt_basico, provider=provider)
@@ -224,7 +224,7 @@ prompt_mejorado = construir_prompt("mejorado", ingredientes_pocos)
 print(prompt_mejorado)
 """))
 cells.append(code(r"""# Ejecutar prompt mejorado
-cliente_llm = lambda p: generate_text(p, provider=provider)
+cliente_llm = lambda p, **kw: generate_text(p, provider=provider, **kw)
 
 resultado_mejorado = generar_recomendaciones(
     cliente_llm,
@@ -449,7 +449,7 @@ cells.append(md("""## Contenido adicional: Texto → Audio
 Como extensión, generamos una narración de la receta elegida usando `edge-tts`, una herramienta gratuita y sin API key.
 """))
 cells.append(code(r"""# Texto → Audio
-import nest_asyncio
+import nest_asyncio2 as nest_asyncio
 nest_asyncio.apply()
 
 from recetaexpress.audio import generar_audio
