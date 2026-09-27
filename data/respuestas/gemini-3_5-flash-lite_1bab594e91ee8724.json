@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of a traditional homemade chicken and rice dish. Vibrant yellow seasoned rice mixed with tender pieces of golden-brown chicken, finely minced cooked onions. Beautifully served in a rustic earthenware bowl on a wooden kitchen table. Soft natural window light highlighting the textures and steam rising gently from the dish. 45-degree angle composition, shallow depth of field, appetizing, clean background. No text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía culinaria profesional de un plato tradicional y casero de arroz con pollo. Arroz condimentado de color amarillo vibrante mezclado con tiernos trozos de pollo dorados y cebolla cocida finamente picada. Servido bellamente en un plato de barro rústico sobre una mesa de cocina de madera. Luz natural suave de ventana que resalta las texturas y el vapor que asciende suavemente del plato. Composición en ángulo de 45 grados, poca profundidad de campo, apetitoso, fondo limpio. Sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.383,
+    "prompt_chars": 805,
+    "provider": "gemini"
+  }
+}

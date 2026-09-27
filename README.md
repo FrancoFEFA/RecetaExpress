@@ -16,10 +16,6 @@ El proyecto se entrega como un repositorio de GitHub con una Jupyter Notebook fu
 
 ## Introducción
 
-### Nombre del proyecto
-
-**RecetaExpress**
-
 ### Presentación del problema a abordar
 
 Muchas personas abren la heladera o la despensa y no saben qué preparar con lo que tienen. Las búsquedas tradicionales en internet asumen que el usuario ya sabe qué plato quiere cocinar, pero precisamente ese es el punto de partida: no se sabe. Al incorporar nuevos ingredientes, tampoco es evidente qué nuevas recetas se desbloquean. Esta situación genera desperdicio de alimentos, decisiones de último momento y comidas repetitivas.
@@ -131,31 +127,69 @@ La implementación se divide en módulos reutilizables bajo `src/recetaexpress/`
 - `audio.py`: generación de narración con `edge-tts`.
 - `evaluacion.py`: métricas objetivas, comparación y gráficos.
 
-La Jupyter Notebook (`RecetaExpress.ipynb`) contiene las 21 secciones pedidas y ejecuta todo el pipeline de forma didáctica.
+La Jupyter Notebook (`RecetaExpress.ipynb`) contiene las secciones pedidas (más extensiones de comparativa de imágenes, galería de recetas e interfaz interactiva) y ejecuta todo el pipeline de forma didáctica.
 
 ### Prompt utilizado para generar la imagen
 
 La receta elegida fue **"Arroz con pollo clásico en sartén"**. El modelo de texto generó el siguiente prompt visual (en inglés) para Pollinations:
 
-> *"A close-up food photography shot of a rustic skillet filled with classic chicken and rice. Visible ingredients include golden seared chicken pieces, fluffy white rice, sautéed onions, and a hint of bell pepper. The dish is served in a warm, home-style kitchen setting with soft natural window light coming from the side. Garnished with a sprinkle of fresh herbs. Perspective: 45-degree angle. Style: appetizing, cozy home cooking, editorial food photography. No text, no logos, no people."*
+> *"Professional food photography of classic skillet chicken and rice, featuring juicy golden-brown chicken pieces nestled among perfectly cooked grains of seasoned rice, garnished with translucent sautéed onions. Served in a rustic ceramic bowl on a dark wooden table. Soft natural window light highlighting the textures and steam rising gently from the dish. 45-degree angle composition, shallow depth of field, warm cozy home kitchen ambiance. No text, no logos, no people, no unrelated elements."*
 
 ### Imagen de resultado
 
-![Arroz con pollo clásico en sartén](images/arroz_con_pollo_clásico_en_sartén.jpg)
+![Arroz con pollo clásico en sartén](images/arroz_con_pollo_clasico_en_sarten.jpg)
 
-*Imagen generada con Pollinations (modelo `sana`) a partir del prompt visual producido por Gemini.*
+*Imagen generada con Pollinations (modelo `flux`) a partir del prompt visual producido por Gemini. Se eligió `flux` porque, en la comparativa de la notebook, mostró mejor realismo fotográfico y menos artefactos que `sana` y `gptimage`.*
 
 ### Audio de resultado
 
 El sistema también generó una narración de la receta:
 
-- Archivo: `audio/arroz_con_pollo_clásico_en_sartén.mp3`
+- Archivo: `audio/arroz_con_pollo_clasico_en_sarten.mp3`
+
+### Comparativa de generadores de imagen
+
+Para decidir qué modelo de imagen usar, generamos el mismo prompt visual con tres modelos gratuitos de Pollinations y comparamos métricas objetivas:
+
+| Modelo | Estado | Tamaño aprox. | Observación |
+|---|---|---|---|
+| `sana` | ✅ Funciona | ~30–50 KB | Rápido, pero menor realismo y más artefactos. |
+| `flux` | ✅ Funciona | ~60–90 KB | Mejor realismo fotográfico y coherencia de ingredientes. |
+| `gptimage` | ✅ Funciona | ~50–80 KB | Buen estilo editorial, aunque a veces inventa detalles. |
+
+La notebook incluye las tres imágenes lado a lado. Se eligió `flux` como modelo por defecto por su equilibrio entre calidad y estabilidad.
+
+> **Nota sobre Gemini para imágenes:** los modelos nativos de imagen de Gemini (`gemini-3.1-flash-image`, `gemini-3.1-flash-lite-image`) **no están incluidos en el free tier**. Requieren habilitar facturación y cuestan aproximadamente US$0,034–0,067 por imagen de 1024×1024 px. Por eso se prefirió una solución gratuita automatizada.
+
+### Galería de recetas
+
+El sistema funciona con múltiples platos. A continuación se muestran imágenes generadas para cuatro platos representativos del catálogo de ingredientes:
+
+| Plato | Imagen |
+|---|---|
+| Arroz con pollo | ![Galería 1](images/galeria/arroz_con_pollo.jpg) |
+| Tortilla de papas | ![Galería 2](images/galeria/tortilla_de_papas.jpg) |
+| Sopa de verduras | ![Galería 3](images/galeria/sopa_de_verduras.jpg) |
+| Ensalada mixta | ![Galería 4](images/galeria/ensalada_mixta.jpg) |
+
+> Estos nombres de archivo son deterministas porque la galería usa platos fijos del catálogo. La notebook regenera las imágenes automáticamente en `images/galeria/`.
+
+### Interfaz interactiva
+
+La notebook incluye una interfaz con `ipywidgets` que permite:
+
+1. Seleccionar ingredientes del catálogo.
+2. Presionar **"Generar recomendaciones"** para obtener recetas clasificadas.
+3. Elegir una receta del desplegable.
+4. Presionar **"Generar imagen"** o **"Generar audio"** para producir contenido multimodal.
+
+La interfaz usa la caché del módulo `llm.py`, por lo que repetir una consulta no consume cuota de Gemini.
 
 ---
 
 ## Resultados
 
-La notebook se ejecutó con el modelo `gemini-3.8-flash`. A continuación se resumen los hallazgos principales.
+La notebook se ejecutó con el modelo `gemini-3.5-flash-lite` (primer modelo disponible de la lista de fallback). A continuación se resumen los hallazgos principales.
 
 ### Comparación de versiones de prompt
 
@@ -211,7 +245,9 @@ Los objetivos se cumplieron:
 - Se diseñaron y compararon tres versiones de prompt.
 - Se validó la respuesta del modelo para evitar alucinaciones y contradicciones.
 - Se implementó el descubrimiento progresivo de recetas.
-- Se generó una imagen representativa con una herramienta gratuita.
+- Se generó una imagen representativa con una herramienta gratuita y se compararon tres generadores de imagen con el mismo prompt.
+- Se construyó una galería de recetas que demuestra que el sistema funciona con múltiples platos.
+- Se agregó una interfaz interactiva con `ipywidgets` dentro de la notebook.
 - Se evaluaron los prompts con métricas objetivas y un juez auxiliar.
 - Se documentó todo en una Jupyter Notebook funcional y un repositorio de GitHub.
 
@@ -223,11 +259,11 @@ La evolución fue clara: el prompt básico produjo respuestas poco controladas; 
 
 El proyecto incluye el uso de **tres modelos** como extensión de la consigna original:
 
-1. **Texto → Texto:** Gemini (`gemini-3.8-flash`) para generar y evaluar recetas.
-2. **Texto → Imagen:** Pollinations (modelo `sana`) para generar la foto del plato.
+1. **Texto → Texto:** Gemini (`gemini-3.5-flash-lite`) para generar y evaluar recetas.
+2. **Texto → Imagen:** Pollinations (modelo `flux`) para generar la foto del plato, con comparativa contra `sana` y `gptimage`.
 3. **Texto → Audio:** `edge-tts` para narrar la receta seleccionada.
 
-No se desarrolló una interfaz gráfica separada porque la consigna prioriza la Jupyter Notebook como demostración académica. La notebook cumple esa función de forma completa.
+Además, se agregó una **interfaz interactiva con `ipywidgets`** dentro de la Jupyter Notebook, permitiendo seleccionar ingredientes, generar recomendaciones y producir imagen/audio sin salir de la notebook.
 
 ---
 
@@ -264,7 +300,9 @@ No se desarrolló una interfaz gráfica separada porque la consigna prioriza la 
 
 - El conocimiento culinario del modelo tiene fecha de corte; puede desconocer recetas regionales.
 - La validación depende del catálogo y alias definidos; ingredientes fuera del catálogo se tratan como no disponibles.
-- El generador de imágenes gratuito puede variar en calidad.
+- Los generadores de imágenes gratuitos (`sana`, `flux`, `gptimage` en Pollinations) varían en calidad; `flux` suele dar el mejor realismo, pero ninguno garantiza fidelidad perfecta a los ingredientes.
+- Los modelos de imagen nativos de Gemini no están incluidos en el free tier; requieren facturación.
+- La interfaz con `ipywidgets` requiere ejecutar la notebook en un entorno Jupyter interactivo.
 - Con n=3 escenarios, las conclusiones son indicativas, no estadísticamente significativas.
 - No se consideran restricciones dietéticas, alergias o preferencias personales.
 

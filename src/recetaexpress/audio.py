@@ -1,12 +1,14 @@
 import asyncio
 from pathlib import Path
 import edge_tts
+from unidecode import unidecode
 
 from .config import AUDIO_DIR
 
 
 def _safe_name(nombre: str) -> str:
-    return "".join(c if c.isalnum() else "_" for c in nombre).lower()
+    normalizado = unidecode(nombre)
+    return "".join(c if c.isalnum() else "_" for c in normalizado).lower()
 
 
 async def _generar_async(texto: str, voz: str, salida: str):

@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of aromatic garlic chicken and rice. The dish features juicy golden-brown chicken pieces nestled among perfectly cooked fluffy rice, infused with translucent sautéed onions and subtle specks of black pepper. Served in a rustic ceramic bowl placed on a warm wooden kitchen countertop. Fresh garlic cloves and a hint of cooking oil glisten softly under gentle natural side light from a nearby window. Top-down 45-degree angle composition, highlighting rich textures and appetizing steam. Commercial food styling, shallow depth of field, cozy home-cooked kitchen atmosphere, no text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía gastronómica profesional de arroz con pollo al ajo aromático. El plato muestra jugosos trozos de pollo dorados entre arroz esponjoso perfectamente cocinado, infusionado con cebollas translúcidas salteadas y sutiles motas de pimienta negra. Servido en un bol de cerámica rústica colocado sobre una encimera de cocina de madera cálida. Dientes de ajo frescos y un toque de aceite de cocina brillan suavemente bajo una luz natural lateral y suave proveniente de una ventana cercana. Composición en ángulo cenital de 45 grados, destacando texturas ricas y vapor apetitoso. Estilismo de comida comercial, poca profundidad de campo, ambiente cálido de cocina casera, sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.866,
+    "prompt_chars": 838,
+    "provider": "gemini"
+  }
+}

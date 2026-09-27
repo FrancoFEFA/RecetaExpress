@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of a traditional Spanish potato tortilla on a rustic ceramic plate, perfectly golden and sliced to reveal soft layers of tender potato and egg inside. Fresh raw ingredients scattered artistically around the plate including whole farm-fresh eggs, a peeled potato, and a small glass bowl of golden olive oil. Warm rustic kitchen background with soft, natural window light creating gentle shadows. 45-degree angle shot, shallow depth of field, highly detailed, vibrant and appetizing colors, photorealistic, no text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía gastronómica profesional de una tortilla de papas española tradicional sobre un plato de cerámica rústica, perfectamente dorada y cortada para revelar capas suaves de papa tierna y huevo en su interior. Ingredientes frescos y crudos dispuestos artísticamente alrededor del plato, incluyendo huevos de granja enteros, una papa pelada y un pequeño cuenco de vidrio con aceite de oliva dorado. Fondo de cocina rústica y cálida con luz de ventana natural y suave que crea sombras delicadas. Toma en ángulo de 45 grados, poca profundidad de campo, altamente detallada, colores vibrantes y apetitosos, fotorrealista, sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.753,
+    "prompt_chars": 797,
+    "provider": "gemini"
+  }
+}

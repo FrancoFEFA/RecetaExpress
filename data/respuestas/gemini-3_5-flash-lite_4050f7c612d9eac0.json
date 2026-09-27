@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of classic skillet chicken and rice, featuring juicy golden-brown chicken pieces nestled among perfectly cooked grains of seasoned rice, garnished with translucent sautéed onions. Served in a rustic ceramic bowl on a dark wooden table. Soft natural window light highlighting the textures and steam rising gently from the dish. 45-degree angle composition, shallow depth of field, warm cozy home kitchen ambiance. No text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía culinaria profesional de arroz con pollo clásico en sartén, con jugosas piezas de pollo doradas intercaladas entre granos de arroz sazonados perfectamente cocidos y cebollas salteadas translúcidas. Servido en un bol de cerámica rústica sobre una mesa de madera oscura. Suave luz natural de ventana que resalta las texturas y el vapor que asciende suavemente del plato. Composición en ángulo de 45 grados, poca profundidad de campo, ambiente cálido de cocina casera. Sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.371,
+    "prompt_chars": 823,
+    "provider": "gemini"
+  }
+}

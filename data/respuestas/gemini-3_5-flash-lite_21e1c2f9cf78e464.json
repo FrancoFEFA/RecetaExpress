@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of a hearty vegetable soup in a rustic ceramic bowl, featuring perfectly diced tender potatoes, vibrant carrot slices, and translucent onion pieces in a clear, savory broth. Garnished with a drizzle of golden olive oil on top. Styled with raw ingredients subtly placed in the background including a whole potato, a fresh carrot, and a peeled onion. Shot at a 45-degree angle, shallow depth of field, soft natural window light casting gentle shadows, warm cozy home kitchen ambiance, cinematic food styling, ultra-detailed, 8k resolution, photorealistic. No text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía cenital o a 45 grados de una sopa casera de verduras en un rústico tazón de cerámica, con cubos perfectos de papa tierna, rodajas vibrantes de zanahoria y trozos translúcidos de cebolla en un caldo claro y sabroso. Decorado con un hilo de aceite de oliva dorado en la superficie. Estilismo con ingredientes crudos sutilmente ubicados en el fondo, incluyendo una papa entera, una zanahoria fresca y una cebolla pelada. Iluminación natural suave de ventana con sombras delicadas, ambiente de cocina casera cálida y acogedora, estilismo culinario profesional, ultra detallado, resolución 8k, fotorrealista. Sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.532,
+    "prompt_chars": 815,
+    "provider": "gemini"
+  }
+}

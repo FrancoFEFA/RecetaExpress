@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional culinary food photography of a gourmet stir-fried chicken with deeply caramelized onions, presented in a rustic handmade ceramic shallow bowl. Tender, golden-brown juicy chicken breast pieces glistening with a savory sweet glaze, intermingled with soft, translucent amber-brown caramelized onion strips, garnished with freshly cracked black peppercorns and flaky sea salt. Elegant 45-degree perspective. Soft, warm natural window light highlighting the rich glossy textures and steam. Set on a rustic wooden farmhouse table in a cozy, warm home kitchen setting with a gentle, shallow depth of field, hyperrealistic, delicious food styling, no people, no text, no logos.\",\n  \"prompt_es\": \"Fotografía culinaria profesional de un salteado gourmet de pollo con cebolla profundamente caramelizada, presentado en un plato hondo de cerámica rústica hecha a mano. Trozos de pechuga de pollo tiernos, jugosos y dorados que brillan con un glaseado dulce y salado, entrelazados con suaves tiras de cebolla caramelizada de color marrón ámbar translúcido, aderezados con granos de pimienta negra recién molida y escamas de sal marina. Perspectiva elegante a 45 grados. Luz natural de ventana suave y cálida que resalta las ricas texturas brillantes y el vapor. Dispuesto sobre una mesa rústica de madera en un ambiente de cocina casera cálida y acogedora, con una profundidad de campo suave y reducida, estilo de comida apetitosa e hiperrealista, sin personas, sin texto, sin logotipos.\"\n}",
+  "metadata": {
+    "model": "gemini-3.8-flash",
+    "temperature": 0.3,
+    "latency_seconds": 5.253,
+    "prompt_chars": 843,
+    "provider": "gemini"
+  }
+}

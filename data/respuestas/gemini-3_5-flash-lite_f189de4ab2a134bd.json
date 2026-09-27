@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of a comforting homemade stir-fried chicken with tender onions and fluffy white rice, served in a rustic ceramic bowl. Visible juicy golden chicken pieces, translucent caramelized onions, and perfectly separated grains of rice, seasoned with cracked black pepper. Shot from a 45-degree angle, styled by a professional food stylist. Soft natural window light illuminating the dish, warm and cozy kitchen ambiance in the background with a shallow depth of field. High-end culinary magazine style, photorealistic, vibrant textures, no text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía culinaria profesional de un reconfortante pollo salteado casero con cebollas tiernas y arroz blanco esponjoso, servido en un plato de cerámica rústica. Trozos de pollo dorados y jugosos visibles, cebollas caramelizadas translúcidas y granos de arroz perfectamente separados, sazonado con pimienta negra quebrada. Toma desde un ángulo de 45 grados, estilizado por un estilista de alimentos profesional. Luz natural suave de ventana que ilumina el plato, ambiente de cocina cálido y acogedor de fondo con poca profundidad de campo. Estilo de revista culinaria de alta gama, fotorrealista, texturas vibrantes, sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.505,
+    "prompt_chars": 840,
+    "provider": "gemini"
+  }
+}

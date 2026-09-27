@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of oriental-style chicken fried rice served in a rustic ceramic bowl. Visible ingredients include perfectly separated grains of rice, golden-brown tender chicken pieces, translucent caramelized onions, and freshly cracked black pepper. Shot from a 45-degree angle with soft, natural morning window light illuminating the dish. Warm cozy home kitchen background softly out of focus. Highly detailed, vibrant colors, shallow depth of field, minimalist composition, no text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía culinaria profesional de arroz frito con pollo al estilo oriental servido en un bowl de cerámica rústica. Los ingredientes visibles incluyen granos de arroz perfectamente separados, trozos de pollo tierno dorados, cebollas caramelizadas translúcidas y pimienta negra recién molida. Tomado desde un ángulo de 45 grados con luz de ventana natural y suave que ilumina el plato. Fondo de cocina casera cálida suavemente fuera de foco. Altamente detallado, colores vibrantes, poca profundidad de campo, composición minimalista, sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.386,
+    "prompt_chars": 837,
+    "provider": "gemini"
+  }
+}

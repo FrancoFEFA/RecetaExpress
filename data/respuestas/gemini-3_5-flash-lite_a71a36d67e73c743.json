@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"criterios\": {\n    \"claridad\": {\n      \"nota\": 5,\n      \"justificacion\": \"Las descripciones de cada receta son claras y fáciles de entender, por ejemplo: 'Un plato completo y reconfortante donde el pollo se dora junto con la cebolla'.\"\n    },\n    \"relevancia\": {\n      \"nota\": 5,\n      \"justificacion\": \"Las recetas se basan estrictamente en los ingredientes básicos proporcionados como pollo, arroz, cebolla, aceite, agua, sal y pimienta.\"\n    },\n    \"cumplimiento_instrucciones\": {\n      \"nota\": 5,\n      \"justificacion\": \"Se respetan todas las restricciones: no se inventan ingredientes ('ingredientes_inventados_detectados': []), se indican faltantes vacíos y se clasifica correctamente.\"\n    },\n    \"uso_ingredientes\": {\n      \"nota\": 5,\n      \"justificacion\": \"Utiliza exclusivamente los ingredientes disponibles en el sistema sin añadir elementos externos no autorizados.\"\n    },\n    \"estructura\": {\n      \"nota\": 5,\n      \"justificacion\": \"El formato JSON es completamente válido, estructurado y sigue la jerarquía esperada para este tipo de respuestas.\"\n    },\n    \"variedad\": {\n      \"nota\": 4,\n      \"justificacion\": \"A pesar de tener pocos ingredientes base, ofrece buena variedad con platos como salteado, arroz estofado, plancha y caldoso.\"\n    },\n    \"utilidad\": {\n      \"nota\": 5,\n      \"justificacion\": \"Es muy útil para un usuario real que tenga pocos ingredientes en casa, ofreciendo opciones prácticas y tiempos estimados.\"\n    }\n  },\n  \"comentario_general\": \"La respuesta evaluada es excelente. Cumple rigurosamente con el formato JSON, utiliza únicamente los ingredientes permitidos, ofrece descripciones claras y presenta una buena variedad de recetas a pesar de las limitaciones de ingredientes.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.955,
+    "prompt_chars": 3705,
+    "provider": "gemini"
+  }
+}

@@ -47,7 +47,7 @@ Formato de salida (JSON estricto):
       "ingredientes_faltantes": ["string"],
       "tiempo": "string",
       "dificultad": "string",
-      "aprovechamiento": "string"
+      "aprovechamiento": "number (porcentaje de ingredientes disponibles usados)"
     }}
   ],
   "recetas_un_ingrediente": [...],
