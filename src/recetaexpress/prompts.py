@@ -1,5 +1,3 @@
-from .config import BASICOS_DESPENSA
-
 PROMPT_BASICO = """Tengo estos ingredientes: {ingredientes}.
 ¿Qué recetas puedo preparar? Devuélveme la respuesta en formato JSON con tres listas: recetas_disponibles, recetas_un_ingrediente y recetas_dos_ingredientes.
 Cada receta debe tener nombre, descripcion, ingredientes_utilizados, ingredientes_faltantes, tiempo, dificultad y aprovechamiento."""

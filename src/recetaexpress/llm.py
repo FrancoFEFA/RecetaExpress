@@ -3,7 +3,7 @@ import time
 import hashlib
 import requests
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Optional
 
 from google import genai
 from google.genai import types

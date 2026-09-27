@@ -97,8 +97,9 @@ La justificación de este procedimiento es que separa la creatividad del modelo 
 | `edge-tts` | Narración de audio sin API key |
 | `pandas` | Tablas de evaluación |
 | `matplotlib` | Gráficos comparativos |
+| `ipywidgets` | Interfaz interactiva dentro de la notebook |
 | `python-dotenv` | Gestión segura de la API key |
-| `unidecode` | Normalización de ingredientes |
+| `unidecode` | Normalización de ingredientes y nombres de archivo |
 
 ### Técnicas de Fast Prompting utilizadas
 
@@ -121,13 +122,14 @@ La implementación se divide en módulos reutilizables bajo `src/recetaexpress/`
 
 - `config.py`: rutas, API key, modelos y básicos de despensa.
 - `llm.py`: cliente unificado para Gemini y fallback, con caché y reintentos.
-- `prompts.py`: las tres versiones de prompt y el prompt meta para imágenes.
+- `prompts.py`: las tres versiones de prompt, el prompt meta para imágenes y la rúbrica del juez.
 - `recetas.py`: construcción de prompts, parseo, validación, reclasificación y filtrado.
 - `imagenes.py`: generación del prompt visual y descarga desde Pollinations.
 - `audio.py`: generación de narración con `edge-tts`.
 - `evaluacion.py`: métricas objetivas, comparación y gráficos.
+- `utils.py`: helper compartido para nombres de archivo.
 
-La Jupyter Notebook (`RecetaExpress.ipynb`) contiene las secciones pedidas (más extensiones de comparativa de imágenes, galería de recetas e interfaz interactiva) y ejecuta todo el pipeline de forma didáctica.
+La Jupyter Notebook (`RecetaExpress.ipynb`) contiene las secciones pedidas (más la galería de recetas y la interfaz interactiva) y ejecuta todo el pipeline de forma didáctica.
 
 ### Prompt utilizado para generar la imagen
 
@@ -139,7 +141,7 @@ La receta elegida fue **"Arroz con pollo clásico en sartén"**. El modelo de te
 
 ![Arroz con pollo clásico en sartén](images/arroz_con_pollo_clasico_en_sarten.jpg)
 
-*Imagen generada con Pollinations (modelo `flux`) a partir del prompt visual producido por Gemini. Se eligió `flux` porque, en la comparativa de la notebook, mostró mejor realismo fotográfico y menos artefactos que `sana` y `gptimage`.*
+*Imagen generada con Pollinations (gratuito, sin API key) a partir del prompt visual producido por Gemini.*
 
 ### Audio de resultado
 
@@ -147,32 +149,23 @@ El sistema también generó una narración de la receta:
 
 - Archivo: `audio/arroz_con_pollo_clasico_en_sarten.mp3`
 
-### Comparativa de generadores de imagen
+### Nota sobre el generador de imágenes
 
-Para decidir qué modelo de imagen usar, generamos el mismo prompt visual con tres modelos gratuitos de Pollinations y comparamos métricas objetivas:
+Se evaluó la posibilidad de elegir entre los modelos de Pollinations (`flux`, `gptimage`, `turbo`, `sana`), pero **el endpoint ignora el parámetro `model`**: se verificó que los cuatro devuelven un archivo byte a byte idéntico con el mismo `seed`. Por eso el proyecto usa el modelo por defecto del servicio y no expone un selector de modelo que no haría nada.
 
-| Modelo | Estado | Tamaño aprox. | Observación |
-|---|---|---|---|
-| `sana` | ✅ Funciona | ~30–50 KB | Rápido, pero menor realismo y más artefactos. |
-| `flux` | ✅ Funciona | ~60–90 KB | Mejor realismo fotográfico y coherencia de ingredientes. |
-| `gptimage` | ✅ Funciona | ~50–80 KB | Buen estilo editorial, aunque a veces inventa detalles. |
-
-La notebook incluye las tres imágenes lado a lado. Se eligió `flux` como modelo por defecto por su equilibrio entre calidad y estabilidad.
-
-> **Nota sobre Gemini para imágenes:** los modelos nativos de imagen de Gemini (`gemini-3.1-flash-image`, `gemini-3.1-flash-lite-image`) **no están incluidos en el free tier**. Requieren habilitar facturación y cuestan aproximadamente US$0,034–0,067 por imagen de 1024×1024 px. Por eso se prefirió una solución gratuita automatizada.
+Los modelos nativos de imagen de Gemini (`gemini-3.1-flash-image`, `gemini-3.1-flash-lite-image`) **no están incluidos en el free tier**: requieren habilitar facturación (≈US$0,034–0,067 por imagen de 1024×1024 px). Por eso se prefirió la solución gratuita.
 
 ### Galería de recetas
 
-El sistema funciona con múltiples platos. A continuación se muestran imágenes generadas para cuatro platos representativos del catálogo de ingredientes:
+El mismo pipeline se aplica a otros platos del catálogo para demostrar que no depende de un único ejemplo:
 
 | Plato | Imagen |
 |---|---|
-| Arroz con pollo | ![Galería 1](images/galeria/arroz_con_pollo.jpg) |
-| Tortilla de papas | ![Galería 2](images/galeria/tortilla_de_papas.jpg) |
-| Sopa de verduras | ![Galería 3](images/galeria/sopa_de_verduras.jpg) |
-| Ensalada mixta | ![Galería 4](images/galeria/ensalada_mixta.jpg) |
+| Tortilla de papas | ![Tortilla de papas](images/galeria/tortilla_de_papas.jpg) |
+| Sopa de verduras | ![Sopa de verduras](images/galeria/sopa_de_verduras.jpg) |
+| Ensalada mixta | ![Ensalada mixta](images/galeria/ensalada_mixta.jpg) |
 
-> Estos nombres de archivo son deterministas porque la galería usa platos fijos del catálogo. La notebook regenera las imágenes automáticamente en `images/galeria/`.
+> Los nombres de archivo son deterministas porque la galería usa platos fijos del catálogo. La notebook regenera las imágenes automáticamente en `images/galeria/`.
 
 ### Interfaz interactiva
 
@@ -183,7 +176,7 @@ La notebook incluye una interfaz con `ipywidgets` que permite:
 3. Elegir una receta del desplegable.
 4. Presionar **"Generar imagen"** o **"Generar audio"** para producir contenido multimodal.
 
-La interfaz usa la caché del módulo `llm.py`, por lo que repetir una consulta no consume cuota de Gemini.
+> Requiere ejecutar la notebook en Jupyter Notebook/JupyterLab; en la vista estática de GitHub no es interactiva.
 
 ---
 
@@ -245,9 +238,7 @@ Los objetivos se cumplieron:
 - Se diseñaron y compararon tres versiones de prompt.
 - Se validó la respuesta del modelo para evitar alucinaciones y contradicciones.
 - Se implementó el descubrimiento progresivo de recetas.
-- Se generó una imagen representativa con una herramienta gratuita y se compararon tres generadores de imagen con el mismo prompt.
-- Se construyó una galería de recetas que demuestra que el sistema funciona con múltiples platos.
-- Se agregó una interfaz interactiva con `ipywidgets` dentro de la notebook.
+- Se generó una imagen representativa con una herramienta gratuita.
 - Se evaluaron los prompts con métricas objetivas y un juez auxiliar.
 - Se documentó todo en una Jupyter Notebook funcional y un repositorio de GitHub.
 
@@ -260,10 +251,10 @@ La evolución fue clara: el prompt básico produjo respuestas poco controladas; 
 El proyecto incluye el uso de **tres modelos** como extensión de la consigna original:
 
 1. **Texto → Texto:** Gemini (`gemini-3.5-flash-lite`) para generar y evaluar recetas.
-2. **Texto → Imagen:** Pollinations (modelo `flux`) para generar la foto del plato, con comparativa contra `sana` y `gptimage`.
+2. **Texto → Imagen:** Pollinations para generar la foto del plato.
 3. **Texto → Audio:** `edge-tts` para narrar la receta seleccionada.
 
-Además, se agregó una **interfaz interactiva con `ipywidgets`** dentro de la Jupyter Notebook, permitiendo seleccionar ingredientes, generar recomendaciones y producir imagen/audio sin salir de la notebook.
+Además, la Jupyter Notebook incluye una **interfaz interactiva con `ipywidgets`** que permite seleccionar ingredientes, generar recomendaciones y producir imagen/audio sin salir de la notebook.
 
 ---
 
@@ -300,7 +291,7 @@ Además, se agregó una **interfaz interactiva con `ipywidgets`** dentro de la J
 
 - El conocimiento culinario del modelo tiene fecha de corte; puede desconocer recetas regionales.
 - La validación depende del catálogo y alias definidos; ingredientes fuera del catálogo se tratan como no disponibles.
-- Los generadores de imágenes gratuitos (`sana`, `flux`, `gptimage` en Pollinations) varían en calidad; `flux` suele dar el mejor realismo, pero ninguno garantiza fidelidad perfecta a los ingredientes.
+- El generador de imágenes gratuito no garantiza fidelidad exacta a los ingredientes, y su endpoint ignora el parámetro `model`, por lo que no se puede elegir entre modelos.
 - Los modelos de imagen nativos de Gemini no están incluidos en el free tier; requieren facturación.
 - La interfaz con `ipywidgets` requiere ejecutar la notebook en un entorno Jupyter interactivo.
 - Con n=3 escenarios, las conclusiones son indicativas, no estadísticamente significativas.

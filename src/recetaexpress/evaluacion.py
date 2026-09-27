@@ -7,16 +7,6 @@ import matplotlib.pyplot as plt
 from .config import IMAGES_DIR
 from .recetas import normalizar_ingrediente, ingredientes_a_canonical
 
-CRITERIOS = [
-    "claridad",
-    "relevancia",
-    "cumplimiento_instrucciones",
-    "uso_ingredientes",
-    "estructura",
-    "variedad",
-    "utilidad",
-]
-
 
 def metricas_objetivas(
     respuesta_validada: Dict[str, List[Dict]],

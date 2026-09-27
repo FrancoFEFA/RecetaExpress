@@ -1,0 +1,10 @@
+{
+  "text": "{\n  \"prompt_en\": \"Professional food photography of a vibrant mixed salad in a rustic ceramic bowl. Fresh juicy tomato wedges, thinly sliced crisp red onions, glistening with a light dressing of fresh lemon juice, golden olive oil, and flaky sea salt. Warm home kitchen setting, soft natural window light highlighting the textures and fresh condensation. 45-degree angle shot, shallow depth of field, artfully composed, highly detailed, appetizing, no text, no logos, no people, no unrelated elements.\",\n  \"prompt_es\": \"Fotografía cenital o de 45 grados de una ensalada mixta vibrante en un tazón de cerámica rústica. Gajos de tomate fresco y jugoso, rodajas finas de cebolla morada crujiente, brillantes con un ligero aderezo de jugo de limón fresco, aceite de oliva virgen extra y sal marina en escamas. Ambiente de cocina casera cálida, luz natural suave de ventana que resalta las texturas. Toma a 45 grados, poca profundidad de campo, composición artística, altamente detallada, apetitosa, sin texto, sin logotipos, sin personas, sin elementos no relacionados.\"\n}",
+  "metadata": {
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.3,
+    "latency_seconds": 1.463,
+    "prompt_chars": 805,
+    "provider": "gemini"
+  }
+}

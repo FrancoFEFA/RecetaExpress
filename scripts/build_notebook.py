@@ -340,7 +340,7 @@ cells.append(md("""## 18. Texto → Imagen
 Seleccionamos una receta representativa —**Arroz con pollo clásico en sartén**— y usamos el modelo texto→texto como intermediario para generar un prompt visual en inglés. Luego descargamos la imagen desde Pollinations (herramienta gratuita).
 """))
 cells.append(code(r"""# 18. Texto → Imagen
-from recetaexpress.imagenes import generar_imagen
+from recetaexpress.imagenes import generar_prompt_imagen, generar_imagen
 from IPython.display import Image as IPImage, display
 
 # Receta fija del caso de estudio para que los nombres de archivo sean deterministas
@@ -355,66 +355,16 @@ receta_elegida = {
 print(f"Receta elegida: {receta_elegida['nombre']}")
 print(f"Ingredientes: {receta_elegida['ingredientes_utilizados']}")
 
-imagen_info = generar_imagen(
-    cliente_llm,
-    receta_elegida,
-    provider_texto=provider,
-    seed=42,
-    modelo="flux",
-)
+# Paso 1: el modelo de texto actúa como intermediario y escribe el prompt visual
+prompts_visuales, meta_visual = generar_prompt_imagen(cliente_llm, receta_elegida)
+print(f"\nPrompt visual (ES): {prompts_visuales['prompt_es']}")
+print(f"\nPrompt visual (EN): {prompts_visuales['prompt_en']}")
 
-print(f"\nPrompt visual (ES): {imagen_info['prompt_es']}")
-print(f"Prompt visual (EN): {imagen_info['prompt_en']}")
-print(f"Modelo de imagen usado: {imagen_info['modelo_imagen']}")
-print(f"Imagen guardada en: {imagen_info['ruta_imagen']}")
+# Paso 2: ese prompt se envía al generador de imágenes gratuito
+ruta_imagen = generar_imagen(prompts_visuales["prompt_en"], receta_elegida["nombre"], seed=42)
+print(f"\nImagen guardada en: {ruta_imagen}")
 
-display(IPImage(filename=imagen_info['ruta_imagen']))
-"""))
-
-# 18b. Comparativa de generadores de imagen
-cells.append(md("""## 18b. Comparativa de generadores de imagen
-
-El mismo prompt visual se ejecuta con tres modelos gratuitos de Pollinations (`sana`, `flux` y `gptimage`) para comparar fidelidad, realismo y artefactos. Esto transforma la apreciación subjetiva de "no me gustó" en una evaluación documentada.
-"""))
-cells.append(code(r"""# 18b. Comparativa de generadores de imagen
-from recetaexpress.imagenes import generar_comparativa_modelos
-from IPython.display import Image as IPImage, display
-import pandas as pd
-
-comparativa = generar_comparativa_modelos(
-    imagen_info['prompt_en'],
-    receta_elegida['nombre'],
-    seed=42,
-    modelos=("sana", "flux", "gptimage"),
-    width=512,
-    height=512,
-)
-
-# Mostrar imágenes lado a lado
-filas_imagenes = []
-for item in comparativa:
-    if item['ruta']:
-        filas_imagenes.append(IPImage(filename=item['ruta'], width=250))
-
-if filas_imagenes:
-    display(*filas_imagenes)
-
-# Tabla de métricas objetivas de la comparativa
-df_comp = pd.DataFrame([
-    {
-        "modelo": item["modelo"],
-        "tamano_kb": round(item.get("tamano_bytes", 0) / 1024, 1) if item.get("tamano_bytes") else None,
-        "estado": "OK" if item["ruta"] else f"Error: {item.get('error', 'desconocido')}",
-    }
-    for item in comparativa
-])
-display(df_comp)
-
-print("\nJustificación de la elección:")
-print("- flux: mejor realismo fotográfico y coherencia de ingredientes.")
-print("- gptimage: buen estilo editorial, aunque a veces inventa detalles.")
-print("- sana: el más rápido pero con menor fidelidad y más artefactos.")
-print("Para el resto del proyecto usamos flux como default.")
+display(IPImage(filename=ruta_imagen))
 """))
 
 # 19. Resultados
@@ -468,75 +418,52 @@ for paso in progresivo:
     print(f"  Nuevas recetas: {paso['novedades']}")
 """))
 
-# 19b. Galería de recetas
-cells.append(md("""## 19b. Galería de recetas
+# 20. Galería de recetas
+cells.append(md("""## 20. Galería de recetas
 
-Generamos imágenes para cuatro platos representativos del catálogo: **arroz con pollo**, **tortilla de papas**, **sopa de verduras** y **ensalada mixta**. Esto demuestra que el sistema no depende de un único ejemplo y que el generador de imágenes se adapta a distintos platos.
+El mismo pipeline se aplica a otros tres platos del catálogo para demostrar que no depende de un único ejemplo.
 """))
-cells.append(code(r"""# 19b. Galería de recetas
+cells.append(code(r"""# 20. Galería de recetas
 from pathlib import Path
-from recetaexpress.imagenes import _safe_name
+import shutil
+from recetaexpress.utils import safe_filename
 
-# Platos representativos construidos a partir del catálogo de ingredientes
+# Platos adicionales del catálogo (sin repetir el caso de estudio de la sección 18)
 recetas_galeria = {
-    "Arroz con pollo": {
-        "nombre": "Arroz con pollo",
-        "ingredientes_utilizados": ["pollo", "arroz", "cebolla", "aceite", "sal"],
-    },
-    "Tortilla de papas": {
-        "nombre": "Tortilla de papas",
-        "ingredientes_utilizados": ["papa", "huevo", "aceite", "sal"],
-    },
-    "Sopa de verduras": {
-        "nombre": "Sopa de verduras",
-        "ingredientes_utilizados": ["papa", "zanahoria", "cebolla", "aceite", "sal", "agua"],
-    },
-    "Ensalada mixta": {
-        "nombre": "Ensalada mixta",
-        "ingredientes_utilizados": ["tomate", "cebolla", "aceite", "sal", "limón"],
-    },
+    "Tortilla de papas": ["papa", "huevo", "aceite", "sal"],
+    "Sopa de verduras": ["papa", "zanahoria", "cebolla", "aceite", "agua", "sal"],
+    "Ensalada mixta": ["tomate", "cebolla", "limón", "aceite", "sal"],
 }
 
-nombres_elegidos = list(recetas_galeria.keys())
-print(f"Platos seleccionados para la galería: {nombres_elegidos}")
-
-# Generar imagen para cada uno
-import shutil
 Path("images/galeria").mkdir(parents=True, exist_ok=True)
-for nombre in nombres_elegidos:
-    r = recetas_galeria[nombre]
-    try:
-        info_gal = generar_imagen(cliente_llm, r, provider_texto=provider, seed=42, modelo="flux")
-        # Copiar a carpeta galería con nombre limpio
-        safe = _safe_name(nombre)
-        dest = Path(f"images/galeria/{safe}.jpg")
-        root_path = Path(info_gal["ruta_imagen"])
-        shutil.copy(root_path, dest)
-        # Conservar la imagen principal del caso de estudio; el resto se deja solo en galeria
-        if str(root_path) != imagen_info["ruta_imagen"]:
-            root_path.unlink(missing_ok=True)
-        print(f"\n{nombre}")
-        print(f"  Prompt EN: {info_gal['prompt_en'][:120]}...")
-        print(f"  Imagen: {dest}")
-        display(IPImage(filename=str(dest), width=300))
-    except Exception as e:
-        print(f"Error generando imagen para '{nombre}': {e}")
+for nombre, ingredientes in recetas_galeria.items():
+    receta = {"nombre": nombre, "ingredientes_utilizados": ingredientes}
+    prompts_visuales, _ = generar_prompt_imagen(cliente_llm, receta)
+    ruta = generar_imagen(prompts_visuales["prompt_en"], nombre, seed=42)
+
+    # La descarga va a images/; la movemos a la carpeta de la galería
+    destino = Path("images/galeria") / f"{safe_filename(nombre)}{Path(ruta).suffix}"
+    shutil.move(ruta, destino)
+
+    print(f"\n{nombre}")
+    print(f"  Prompt EN: {prompts_visuales['prompt_en'][:110]}...")
+    display(IPImage(filename=str(destino), width=320))
 """))
 
-# 20. Limitaciones del sistema
-cells.append(md("""## 20. Limitaciones del sistema
+# 21. Limitaciones del sistema
+cells.append(md("""## 21. Limitaciones del sistema
 
 - El conocimiento culinario del modelo tiene fecha de corte; puede desconocer recetas regionales.
 - La validación depende del catálogo y alias definidos; ingredientes fuera del catálogo se tratan como no disponibles.
-- Los generadores de imágenes gratuitos (`sana`, `flux`, `gptimage` en Pollinations) varían en calidad; `flux` suele dar el mejor realismo, pero ninguno garantiza fidelidad perfecta a los ingredientes.
+- El generador de imágenes gratuito (Pollinations) no garantiza fidelidad perfecta a los ingredientes, y su endpoint ignora el parámetro `model`: se verificó que `flux`, `gptimage`, `turbo` y `sana` devuelven un archivo byte a byte idéntico, por lo que no se puede elegir entre modelos.
 - Los modelos de imagen nativos de Gemini (`Nano Banana`) no están incluidos en el free tier; requieren facturación.
 - Con n=3 escenarios, las conclusiones sobre la superioridad del prompt optimizado son indicativas, no estadísticamente significativas.
 - La interfaz con `ipywidgets` requiere ejecutar la notebook en un entorno Jupyter interactivo.
 - El sistema no considera restricciones dietéticas, alergias o preferencias personales.
 """))
 
-# 21. Conclusiones
-cells.append(md("""## 21. Conclusiones
+# 22. Conclusiones
+cells.append(md("""## 22. Conclusiones
 
 Se desarrolló RecetaExpress, una POC que demuestra cómo el *Prompt Engineering* y una capa de validación determinística pueden transformar una consulta simple en una respuesta estructurada y confiable.
 
@@ -544,22 +471,20 @@ Los objetivos se cumplieron:
 - Se diseñaron y compararon tres versiones de prompt.
 - Se validó la respuesta del modelo para evitar alucinaciones y contradicciones.
 - Se implementó el descubrimiento progresivo de recetas.
-- Se generó una imagen representativa con una herramienta gratuita y se compararon tres generadores de imagen con el mismo prompt.
-- Se construyó una galería de recetas que demuestra que el sistema funciona con múltiples platos.
-- Se agregó una interfaz interactiva con `ipywidgets` dentro de la notebook.
+- Se generó una imagen representativa con una herramienta gratuita.
 - Se evaluaron los prompts con métricas objetivas y un juez auxiliar.
 
 La evolución fue clara: el prompt básico produjo respuestas poco controladas; el mejorado añadió estructura; el optimizado, combinado con la validación, generó recetas coherentes, clasificadas correctamente y sin ingredientes inventados. El proyecto es viable técnicamente, económico y escalable a futuras mejoras como restricciones dietéticas, alergias o integración con listas de compras.
 """))
 
-# 22. Interfaz interactiva con ipywidgets
-cells.append(md("""## 22. Interfaz interactiva con ipywidgets
+# 23. Interfaz interactiva con ipywidgets
+cells.append(md("""## 23. Interfaz interactiva con ipywidgets
 
-Como extensión, agregamos una interfaz nativa de Jupyter: el usuario selecciona ingredientes, presiona un botón y obtiene recomendaciones; luego puede elegir una receta y generar su imagen o audio. Usa la caché del módulo `llm.py`, por lo que repetir una consulta no consume cuota de Gemini.
+Como extensión, agregamos una interfaz nativa de Jupyter: el usuario selecciona ingredientes, presiona un botón y obtiene recomendaciones; luego puede elegir una receta y generar su imagen o audio.
 
 > **Nota:** los widgets requieren ejecutar la notebook en Jupyter Notebook/JupyterLab. En la vista estática de GitHub se ve la interfaz con la salida de ejemplo precargada.
 """))
-cells.append(code(r"""# 22. Interfaz interactiva con ipywidgets
+cells.append(code(r"""# 23. Interfaz interactiva con ipywidgets
 import ipywidgets as widgets
 from IPython.display import display, clear_output, Audio as IPAudio, Image as IPImage
 
@@ -608,10 +533,11 @@ def on_imagen(b):
         if not receta:
             print("Primero generá recomendaciones y elegí una receta.")
             return
-        info = generar_imagen(cliente_llm, receta, provider_texto=provider, seed=42, modelo="flux")
+        prompts_visuales, _ = generar_prompt_imagen(cliente_llm, receta)
+        ruta = generar_imagen(prompts_visuales["prompt_en"], receta["nombre"], seed=42)
         print(f"Receta: {receta['nombre']}")
-        print(f"Modelo de imagen: {info['modelo_imagen']}")
-        display(IPImage(filename=info['ruta_imagen'], width=400))
+        print(f"Imagen: {ruta}")
+        display(IPImage(filename=ruta, width=400))
 
 def on_audio(b):
     with output_ui:
@@ -667,6 +593,9 @@ texto_narracion = (
 
 audio_path = generar_audio(texto_narracion, receta_elegida['nombre'])
 print(f"Audio guardado en: {audio_path}")
+
+from IPython.display import Audio as IPAudio, display as ipy_display
+ipy_display(IPAudio(filename=audio_path))
 """))
 
 # Verificación de seguridad
@@ -685,23 +614,28 @@ patrones = [
     re.compile(r"password\s*=\s*['\"][^'\"]+['\"]", re.IGNORECASE),
 ]
 
+EXCLUIDOS = {".git", ".venv", "__pycache__", "node_modules"}
+EXTENSIONES = {".py", ".md", ".json", ".txt", ".ipynb", ".env", ".example"}
+
+revisados = 0
 for p in Path(".").rglob("*"):
-    if p.is_file() and p.name not in [".env"] and ".git" not in p.parts and ".venv" not in p.parts:
-        try:
-            texto = p.read_text(encoding="utf-8", errors="ignore")
-            for pat in patrones:
-                if pat.search(texto):
-                    sospechosos.append((str(p), pat.pattern))
-                    break
-        except Exception:
-            pass
+    if not p.is_file() or p.name == ".env":
+        continue
+    if EXCLUIDOS & set(p.parts) or p.suffix.lower() not in EXTENSIONES:
+        continue
+    revisados += 1
+    texto = p.read_text(encoding="utf-8", errors="ignore")
+    for pat in patrones:
+        if pat.search(texto):
+            sospechosos.append((str(p), pat.pattern))
+            break
 
 if sospechosos:
     print("⚠️ Posibles secretos detectados:")
     for archivo, patron in sospechosos:
         print(f"  {archivo} coincide con {patron}")
 else:
-    print("✅ No se detectaron patrones de secretos en archivos del repo (excepto .env, que está en .gitignore).")
+    print(f"✅ No se detectaron secretos en {revisados} archivos de texto (excluyendo .env, que está en .gitignore).")
 """))
 
 # Build and save
